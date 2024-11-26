@@ -10,34 +10,20 @@ void Zagadane_chislo(int Ar[], int N);
 int Buku(int Ar[], int N, int C, int b);
 int Korovu(int Ar[], int N, int C, int k);
 int Chislo(int Ar[], int N, int Ch, int R);
+int Porivnanna(int Ar[], int N, int K);
 
 void Gra()
 {
 	Random();
 	const int N = 4;
 	int Ar[N];
-	int Ch = 0, R = 1;
+	int Ch = 0, R = 1, b = 0, k = 0, a = 0;
 	cout << "Maemo zagadane chislo: ";
 	Zagadane_chislo(Ar, N);
 	int K = Chislo(Ar, N, Ch, R);
 	Show(K);
 	Show('\n');
-	while(true) {
-		int b = 0, k = 0;
-		int a = 0;
-		cout << "Vvedite choturuznachne chuslo: ";
-		Vvod(a);
-		b = Buku(Ar, N, a, b);
-		k = Korovu(Ar, N, a, k);
-		cout << "Vsogo vgadano cifr(buku): ";
-		Show(b);
-		Show('\n');
-		cout << "Vsogo vgadano cifr i vonu stoiat na svoemy mistsi(korovu): ";
-		Show(k);
-		Show('\n');
-		Show('\n');
-		if (K == a)return;
-	}
+	a = Porivnanna(Ar, N, K);
 }
 
 void Zagadane_chislo(int Ar[], int N)
@@ -102,4 +88,22 @@ int Chislo(int Ar[], int N, int Ch, int R)
 	if (N == 0)return Ch;
 	Ch += Ar[N - 1] * R;
 	return Chislo(Ar, N - 1, Ch, R * 10);
+}
+
+int Porivnanna(int Ar[], int N, int K)
+{
+		int b = 0, k = 0, a = 0;
+		cout << "Vvedite choturuznachne chuslo: ";
+		Vvod(a);
+		b = Buku(Ar, N, a, b);
+		k = Korovu(Ar, N, a, k);
+		cout << "Vsogo vgadano cifr(buku): ";
+		Show(b);
+		Show('\n');
+		cout << "Vsogo vgadano cifr i vonu stoiat na svoemy mistsi(korovu): ";
+		Show(k);
+		Show('\n');
+		Show('\n');
+		if (K == a)return a;
+	return Porivnanna(Ar, N, K);
 }
