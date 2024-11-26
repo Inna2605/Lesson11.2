@@ -44,78 +44,85 @@ void Gra()
 
 void Zagadane_chislo(int Ar[], int N)
 {
+	int i = 0;
 	Random();
-	for (int i = 0; i < N; i++) {
+	while (i < N) {
+		if (i == N)break;
 		Ar[i] = rand() % 8 + 1;
+		i++;
 	}
 }
 
 void Show_chisla(int Ar[], int N)
 {
-	for (int i = 0; i < N; i++) {
+	int i = 0;
+	while (true) {
+		if (i == N)break;
 		Show(Ar[i]);
+		i++;
 	}
 	Show('\n');
 }
 
 int Buku(int Ar[], int N, int C, int b)
 {
-	int x, y = C, j = 0, k = 0, n = 0;
+	int x, y = C, i = 0, k = 0, n = 0;
 	const int N2 = 4;
 	int Ar2[N2];
 	
 
-	for (int i = 0; i < N; i++) {
+	while (true) {
+		if (i == N)break;
 		x = y % 10;
 		y /= 10;
-
-		for (int r = 0; r < N2; r++) {
+		int r = 0;
+		while (true) {
+			if (r == N2)break;
 			if (Ar2[r] == x) {
 				n++;
 			}
+			r++;
 		}
 		if (n != 0) {
 			n = 0;
 			continue;
 		}
-
-		for (int j = 0; j < N; j++) {
+		int j = 0;
+		while (true) {
+			if (j == N)break;
 			if (Ar[j] == x) {
 				Ar2[k] = Ar[j];
 				b++;
 				k++;
 			}
+			j++;
 		}
+		i++;
 	}
 	return b;
-
-	/*for (int i = 0; i < k; i++) {
-
-	}*/
-
-	//b = Porivnanna(Ar, N, x, b);
-	//return Buku(Ar, N, C /= 10, b);
 }
 
 int Korovu(int Ar[], int N, int C, int k)
 {
 	int x;
 	if (C == 0)return k;
-		x = C % 10;
-		if (x == Ar[N - 1]) {
-			k++;
-		}
-		N--;
-		return Korovu(Ar, N, C /= 10, k);
+	x = C % 10;
+	if (x == Ar[N - 1]) {
+		k++;
+	}
+	N--;
+	return Korovu(Ar, N, C /= 10, k);
 }
 
 int Chislo(int Ar[], int N)
 {
-	int K = 1000, Sum = 0, C = 0;
-	for (int i = 0; i < N; i++) {
+	int K = 1000, Sum = 0, C = 0, i = 0;
+	while (true) {
+		if (i == N)break;
 		C = Ar[i] * K;
 		Sum += C;
 		K /= 10;
+		i++;
 	}
 	return Sum;
 }
