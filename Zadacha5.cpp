@@ -11,6 +11,8 @@ int Buku(int Ar[], int N, int C, int b);
 int Korovu(int Ar[], int N, int C, int k);
 int Chislo(int Ar[], int N, int Ch, int R);
 int Porivnanna(int Ar[], int N, int K);
+int Posyk_cifru(int Ar2[], int N, int x, int r);
+int Kilkist_cifr(int Ar[], int Ar2[], int N, int x, int b);
 
 void Gra()
 {
@@ -35,38 +37,21 @@ void Zagadane_chislo(int Ar[], int N)
 
 int Buku(int Ar[], int N, int C, int b)
 {
-	int x, i = 0, k = 0, n = 0;
+	int x;
 	const int N2 = 4;
-	int Ar2[N2];
-	
+	int Ar2[N2]{ 0 };
 
 	while (true) {
-		if (i == N)break;
+		if (C == 0)break;
 		x = C % 10;
 		C /= 10;
-		int r = 0;
-		while (true) {
-			if (r == N2)break;
-			if (Ar2[r] == x) {
-				n++;
-			}
-			r++;
-		}
-		if (n != 0) {
-			n = 0;
+				
+		int r = Posyk_cifru(Ar2, N, x, 0);
+		
+		if (r != 0) {
 			continue;
 		}
-		int j = 0;
-		while (true) {
-			if (j == N)break;
-			if (Ar[j] == x) {
-				Ar2[k] = Ar[j];
-				b++;
-				k++;
-			}
-			j++;
-		}
-		i++;
+		b = Kilkist_cifr(Ar, Ar2, N, x, b);
 	}
 	return b;
 }
@@ -92,18 +77,37 @@ int Chislo(int Ar[], int N, int Ch, int R)
 
 int Porivnanna(int Ar[], int N, int K)
 {
-		int b = 0, k = 0, a = 0;
-		cout << "Vvedite choturuznachne chuslo: ";
-		Vvod(a);
-		b = Buku(Ar, N, a, b);
-		k = Korovu(Ar, N, a, k);
-		cout << "Vsogo vgadano cifr(buku): ";
-		Show(b);
-		Show('\n');
-		cout << "Vsogo vgadano cifr i vonu stoiat na svoemy mistsi(korovu): ";
-		Show(k);
-		Show('\n');
-		Show('\n');
-		if (K == a)return a;
+	int b = 0, k = 0, a = 0;
+	cout << "Vvedite choturuznachne chuslo: ";
+	Vvod(a);
+	b = Buku(Ar, N, a, b);
+	k = Korovu(Ar, N, a, k);
+	cout << "Vsogo vgadano cifr(buku): ";
+	Show(b);
+	Show('\n');
+	cout << "Vsogo vgadano cifr i vonu stoiat na svoemy mistsi(korovu): ";
+	Show(k);
+	Show('\n');
+	Show('\n');
+	if (K == a)return a;
 	return Porivnanna(Ar, N, K);
+}
+
+int Posyk_cifru(int Ar2[], int N, int x, int r)
+{
+	if (N == 0)return r;
+	if (Ar2[N - 1] == x) {
+		r++;
+	}
+	return Posyk_cifru(Ar2, N - 1, x, r);
+}
+
+int Kilkist_cifr(int Ar[], int Ar2[], int N, int x, int b)
+{
+	if (N == 0)return b;
+	if (Ar[N - 1] == x) {
+		Ar2[b] = Ar[N - 1];
+		b++;
+	}
+	return Kilkist_cifr(Ar, Ar2, N - 1, x, b);
 }
