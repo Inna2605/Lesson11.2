@@ -7,7 +7,7 @@
 #include "Windows.h"
 using namespace std;
 void Zagadane_chislo(int Ar[], int N);
-int Buku(int Ar[], int N, int C, int b);
+int Buku(int Ar[], int Ar2[], int N, int C, int b);
 int Korovu(int Ar[], int N, int C, int k);
 int Chislo(int Ar[], int N, int Ch, int R);
 int Porivnanna(int Ar[], int N, int K);
@@ -35,25 +35,19 @@ void Zagadane_chislo(int Ar[], int N)
 	Zagadane_chislo(Ar, N-1);
 }
 
-int Buku(int Ar[], int N, int C, int b)
+int Buku(int Ar[], int Ar2[], int N, int C, int b)
 {
-	int x;
-	const int N2 = 4;
-	int Ar2[N2]{ 0 };
+	if (C == 0)return b;
+	int x = C % 10;
 
-	while (true) {
-		if (C == 0)break;
-		x = C % 10;
-		C /= 10;
-				
-		int r = Posyk_cifru(Ar2, N, x, 0);
-		
-		if (r != 0) {
-			continue;
-		}
-		b = Kilkist_cifr(Ar, Ar2, N, x, b);
+	int r = Posyk_cifru(Ar2, N, x, 0);
+
+	if (r != 0) {
+		return Buku(Ar, Ar2, N, C / 10, b);
 	}
-	return b;
+	b = Kilkist_cifr(Ar, Ar2, N, x, b);
+
+	return Buku(Ar, Ar2, N, C / 10, b);
 }
 
 int Korovu(int Ar[], int N, int C, int k)
@@ -77,10 +71,12 @@ int Chislo(int Ar[], int N, int Ch, int R)
 
 int Porivnanna(int Ar[], int N, int K)
 {
+	const int N2 = 4;
+	int Ar2[N2]{ 0 };
 	int b = 0, k = 0, a = 0;
 	cout << "Vvedite choturuznachne chuslo: ";
 	Vvod(a);
-	b = Buku(Ar, N, a, b);
+	b = Buku(Ar, Ar2, N, a, b);
 	k = Korovu(Ar, N, a, k);
 	cout << "Vsogo vgadano cifr(buku): ";
 	Show(b);
